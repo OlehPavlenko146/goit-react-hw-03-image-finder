@@ -27,7 +27,6 @@ export class App extends Component {
       api
         .fetchImages(this.state.query, this.state.page)
         .then(images => {
-          console.log(images);
           this.setState({
             images: images.hits,
             total: images.total,
@@ -47,7 +46,6 @@ export class App extends Component {
       .fetchImages(this.state.query, this.state.page)
 
       .then(data => {
-        console.log(data);
         this.setState(prevState => ({
           images: [...prevState.images, ...data.hits],
         }));

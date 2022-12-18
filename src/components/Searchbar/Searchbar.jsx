@@ -19,13 +19,13 @@ export class SearchBar extends Component {
   handleQueryChange = e => {
     this.setState({ query: e.currentTarget.value.toLowerCase() });
   };
+
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.query.trim() === '') {
       alert('Please enter your request');
     }
     this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
   };
 
   render() {

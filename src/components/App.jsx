@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { SearchBar } from './Searchbar/Searchbar';
-import { api } from './services/api';
+import { api } from '../services/api';
 import { Button } from './Button/Button';
 import { StartTitle, ErrorMessage } from './App.styled';
 
@@ -18,11 +18,16 @@ export class App extends Component {
   };
 
   handleFormSubmit = query => {
-    this.setState({ query, images: [], page: 1 });
+    if (this.state.query !== query) {
+      this.setState({ query, images: [], page: 1 });
+    }
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query) {
+  componentDidUpdate(_, prevState) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
       this.setState({ isLoading: true, error: null });
       api
         .fetchImages(this.state.query, this.state.page)
@@ -42,16 +47,6 @@ export class App extends Component {
     this.setState(prevState => ({
       page: prevState.page + 1,
     }));
-    api
-      .fetchImages(this.state.query, this.state.page)
-
-      .then(data => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
-        }));
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
   };
 
   render() {

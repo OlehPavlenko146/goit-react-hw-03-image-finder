@@ -34,9 +34,7 @@ export class Modal extends Component {
     const { large, alt } = this.props;
     return createPortal(
       <Overlay onClick={this.handleBackdropClick}>
-        <Overlay>
-          <ModalImage src={large} alt={alt} width="600" />
-        </Overlay>
+        <ModalImage src={large} alt={alt} width="600" />
       </Overlay>,
       addModal
     );
